@@ -42,7 +42,7 @@ function Selecttheme() {
     );
     Setcardselect("card-selected");
     setLoading(false);
-  }, []);
+  }, [navigate, prefill.themename, userredux.personal]); 
 
   const onSubmit = () => {
     dispatch(getthemedata(selected));
