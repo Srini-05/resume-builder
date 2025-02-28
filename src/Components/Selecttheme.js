@@ -15,6 +15,9 @@ function Selecttheme() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [clickindex, Setclickindex] = useState("");
+  const [cardselect, Setcardselect] = useState("");
+  const [selected, Setselected] = useState(prefill);
+
   const {
     register,
     handleSubmit,
@@ -26,19 +29,6 @@ function Selecttheme() {
       color: prefill.color,
     },
   });
-  const [cardselect, Setcardselect] = useState("");
-  const [selected, Setselected] = useState(prefill);
-
-  const onSubmit = () => {
-    dispatch(getthemedata(selected));
-    navigate(`/theme-${selected.themename.toLocaleLowerCase()}/download`);
-  };
-
-  const radioinputFunc = (e) => {
-    if (e.target.checked) {
-      Setcardselect("card-selected");
-    }
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -52,10 +42,21 @@ function Selecttheme() {
     );
     Setcardselect("card-selected");
     setLoading(false);
-  }, [navigate, prefill.themename, userredux.personal]);
+  }, []);
+
+  const onSubmit = () => {
+    dispatch(getthemedata(selected));
+    navigate(`/theme-${selected.themename.toLocaleLowerCase()}/download`);
+  };
 
   const resetColor = () => {
     setValue("color", "");
+  };
+
+  const radioinputFunc = (e) => {
+    if (e.target.checked) {
+      Setcardselect("card-selected");
+    }
   };
 
   return (
