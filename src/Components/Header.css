@@ -1,71 +1,84 @@
-
-
-.header{
-    background-color: var(--light);
-    display: grid;
-    grid-template-columns:1fr auto;
+/* General Header Styles */
+.header {
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Matching hero section */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    box-sizing: border-box;
-    padding: 10px 30px 10px 20px;
+    padding: 15px 40px;
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: 9999;
-}
-
-.header>div:first-child{
-    font-size: 30px;
-    font-family: 'Bowlby One Sc', cursive;
-    justify-self: flex-start;
-}
-
-.logo{
-    color: white;
-}
-
-.header>div:nth-child(2){
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 30px;
-}
-
-.header>div:nth-child(2)>div{
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
     transition: all 0.3s ease-in-out;
 }
 
-.header>div:nth-child(2)>div:hover{
-    border-bottom: 3px solid white;
+
+/* Logo Styling */
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
 }
 
-@media screen and (max-width:850px) {
-    .header{
-        padding: 10px 0 10px 20px;
-        grid-template-columns:50% repeat( auto-fit, minmax(20px, 1fr) );
+.logo:hover {
+    transform: scale(1.1);
+}
+
+/* Navbar Links */
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links div {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Underline Animation */
+.nav-links div::after {
+    content: "";
+    display: block;
+    height: 3px;
+    width: 0;
+    background: white;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.nav-links div:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 850px) {
+    .header {
+        padding: 15px 20px;
     }
-    .header>div:nth-child(2){
-        gap:20px;
+    .nav-links {
+        gap: 20px;
     }
 }
 
-@media screen and (max-width:500px) {
-    .header{
-        padding: 10px 20px 10px 20px;
-        grid-template-columns: 1fr 1fr;
+@media screen and (max-width: 500px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
     }
-    .header>div{
-        font-size:16px;
-    }
-    .header>div:nth-child(2)>div:hover{
-        border-bottom: 3px solid transparent;
-    }
-    .header>div:nth-child(2)>div:active{
-        border-bottom: 3px solid white;
+    .nav-links {
+        flex-direction: column;
+        gap: 15px;
     }
 }

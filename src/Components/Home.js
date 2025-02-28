@@ -8,61 +8,65 @@ import minimalist from "../assets/minimalist.png";
 import professional from "../assets/professional.png";
 
 function Home() {
-  const scollToRef = useRef();
+  const scrollToRef = useRef();
   const scrollFunc = () => {
-    scollToRef.current.scrollIntoView({ behavior: "smooth" });
+    scrollToRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <>
       <Header handleclick={scrollFunc} />
 
-      <div className="heading">Resume Builder</div>
-      <div className="home-main">
-        <div className="home-head">
-        Create your developer-style resume effortlessly with Resume Builder!
-        </div>
-        <div>
-        A fresh platform designed to build your resume in just seconds.
-        </div>
-        <div className="img-home">
-          <img src={creative} alt="" />
-          <img src={minimalist} alt="" />
-          <img src={professional} alt="" />
-        </div>
-        <div className="steps">
-          <div>Follow the steps</div>
-          <div>
-            <div className="step-head">Step 1:</div>
-            <div className="step-subhead">Input all your details</div>
-            <div className="step-subhead">Select the template you want</div>
-            <div className="step-head">:Step 2</div>
-            <div className="step-head">Step 3:</div>
-            <div className="step-subhead">Your resume is ready to download</div>
-            <div className="step-subhead">Click on download</div>
-            <div className="step-head">:Step 4</div>
-          </div>
-        </div>
-        <div className="started">
-          <div className="home-subheading">Are you ready?</div>
-          <Link to={"/resumebuild"} className="link">
-            <button className="started-btn">Get started</button>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Build Your Resume in Minutes</h1>
+          <p>Create a professional resume effortlessly with our easy-to-use builder.</p>
+          <Link to="/resumebuild" className="link">
+            <button className="cta-button">Get Started</button>
           </Link>
         </div>
-      </div>
-      <div className="contact" ref={scollToRef}>
-        <div>Get in Touch</div>
-        <div>
-          <a
-            href="https://www.linkedin.com/in/srinivasanpalanivel/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link"
-          >
-            <IoLogoLinkedin className="social-icon" />
-          </a>
+      </section>
+
+      {/* Features Section */}
+      <section className="features">
+        <h2>Choose Your Style</h2>
+        <div className="feature-images">
+          <img src={creative} alt="Creative Resume" />
+          <img src={minimalist} alt="Minimalist Resume" />
+          <img src={professional} alt="Professional Resume" />
         </div>
-      </div>
+      </section>
+
+      {/* Steps Section */}
+      <section className="steps">
+        <h2>How It Works</h2>
+        <div className="step">
+          <h3>Step 1</h3>
+          <p>Enter your details and choose a template.</p>
+        </div>
+        <div className="step">
+          <h3>Step 2</h3>
+          <p>Customize your resume with our easy editor.</p>
+        </div>
+        <div className="step">
+          <h3>Step 3</h3>
+          <p>Download your resume instantly.</p>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <footer className="contact" ref={scrollToRef}>
+        <h2>Get in Touch</h2>
+        <a
+          href="https://www.linkedin.com/in/srinivasanpalanivel/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link"
+        >
+          <IoLogoLinkedin className="social-icon" />
+        </a>
+      </footer>
     </>
   );
 }
