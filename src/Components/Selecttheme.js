@@ -11,9 +11,7 @@ function Selecttheme() {
   const [loading, setLoading] = useState(true);
   const themeredux = useSelector((state) => state.theme);
   const userredux = useSelector((state) => state.user.userdata);
-  const prefill = themeredux.theme
-    ? themeredux.theme
-    : { themename: "", color: "" };
+  const prefill = themeredux.theme || { themename: "", color: "" };
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [clickindex, Setclickindex] = useState("");
@@ -29,9 +27,7 @@ function Selecttheme() {
     },
   });
   const [cardselect, Setcardselect] = useState("");
-  const [selected, Setselected] = useState(
-    prefill.themename ? prefill : { themename: "", color: "" }
-  );
+  const [selected, Setselected] = useState(prefill);
 
   const onSubmit = () => {
     dispatch(getthemedata(selected));
@@ -56,9 +52,9 @@ function Selecttheme() {
     );
     Setcardselect("card-selected");
     setLoading(false);
-  }, []);
+  }, [navigate, prefill.themename, userredux.personal]);
 
-  const resetColor = (item) => {
+  const resetColor = () => {
     setValue("color", "");
   };
 
@@ -70,75 +66,61 @@ function Selecttheme() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="theme-header">Select Theme</div>
           <div className="theme-main">
-            {themedata.map((item, index) => {
-              return (
-                <div
-                  className={index === clickindex ? cardselect : ""}
-                  onClick={() => {
-                    Setclickindex(index);
-                    Setselected((e) => ({ ...e, themename: item.themename }));
-                    Setcardselect("card-selected");
-                    resetColor(item);
-                  }}
-                  key={index}
-                >
-                  <img src={item.img} alt="" />
-                  <div>{item.themename}</div>
-                  <input
-                    type={"radio"}
-                    {...register("theme", { required: true })}
-                    value={item.themename}
-                    checked={index === clickindex ? true : false}
-                    onClick={() => Setclickindex(index)}
-                    onChange={radioinputFunc}
-                    name="theme"
-                  />
-                </div>
-              );
-            })}
-            <div className="theme-main-msg">More theme will available soon</div>
+            {themedata.map((item, index) => (
+              <div
+                className={index === clickindex ? cardselect : ""}
+                onClick={() => {
+                  Setclickindex(index);
+                  Setselected((e) => ({ ...e, themename: item.themename }));
+                  Setcardselect("card-selected");
+                  resetColor();
+                }}
+                key={index}
+              >
+                <img src={item.img} alt={item.themename} />
+                <div>{item.themename}</div>
+                <input
+                  type="radio"
+                  {...register("theme", { required: true })}
+                  value={item.themename}
+                  checked={index === clickindex}
+                  onChange={radioinputFunc}
+                  name="theme"
+                />
+              </div>
+            ))}
+            <div className="theme-main-msg">More themes will be available soon</div>
           </div>
-          {errors.theme ? (
-            <div className="theme-err">Select the theme</div>
-          ) : null}
+          {errors.theme && <div className="theme-err">Select the theme</div>}
 
-          {clickindex !== "" ? (
+          {clickindex !== "" && (
             <>
               <div className="theme-header">Select Theme Color</div>
               <div className="clr-select">
-                {themedata[clickindex].colors.map((color, index) => {
-                  return (
-                    <div key={index}>
-                      <input
-                        type="radio"
-                        {...register("color", { required: true })}
-                        value={color}
-                        name="color"
-                        onChange={(e) =>
-                          Setselected((prev) => ({
-                            ...prev,
-                            color: e.target.value,
-                          }))
-                        }
-                      />
-                      <div style={{ backgroundColor: `${color}` }}></div>
-                    </div>
-                  );
-                })}
+                {themedata[clickindex].colors.map((color, index) => (
+                  <div key={index}>
+                    <input
+                      type="radio"
+                      {...register("color", { required: true })}
+                      value={color}
+                      name="color"
+                      onChange={(e) =>
+                        Setselected((prev) => ({ ...prev, color: e.target.value }))
+                      }
+                    />
+                    <div style={{ backgroundColor: color }}></div>
+                  </div>
+                ))}
               </div>
-              {errors.color ? (
-                <div className="theme-err">Select the theme color</div>
-              ) : null}
+              {errors.color && <div className="theme-err">Select the theme color</div>}
             </>
-          ) : null}
+          )}
 
           <div className="btn-div">
-            <Link to={"/resumebuild"} className="link">
+            <Link to="/resumebuild" className="link">
               <button className="btn">Back</button>
             </Link>
-            <button type="submit" className="btn">
-              Proceed
-            </button>
+            <button type="submit" className="btn">Proceed</button>
           </div>
         </form>
       )}
